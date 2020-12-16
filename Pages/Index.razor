@@ -1,0 +1,78 @@
+﻿@page "/"
+
+<h1>.NET 5.0 Data Annotations Playground</h1>
+
+<p>.NET 5.0 Makes getting at the metadata in the DataAnnotations on models much less onerous. Previous versions required all sorts of setup and custom metadata providers to get all of the available metadata for a form or grid.  I set up this project to see if the access to these properties has improved and to play with blazor.</p>
+<p>I made a test class that I am using to assign assorted data annotionsa to different types <code>DataAnnotationsTestClass.cs</code> in the Shared folder, using the <code>PropertyDescriptorCollection</code> to get at the metadata. The grid below displays the information from this class using the metadata extracted from the data annotations.</p>
+@if (fieldDetails == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Display Name</th>
+                <th scope="col">Short Name</th>
+                <th scope="col">Prompt</th>
+                <th scope="col">Description</th>
+                <th scope="col">Group Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Browsable</th>
+                <th scope="col">Property Type</th>
+                <th scope="col">Display Format</th>
+                <th scope="col">Null Display Text</th>
+                <th scope="col">Serialization Visibility</th>
+                <th scope="col">Required</th>
+                <th scope="col">Error Message</th>
+                <th scope="col">Attributes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var field in fieldDetails.ToArray())
+            {
+                <tr>
+                    <th scope="row">@field.Name</th>
+                    <td>@field.DisplayName</td>
+                    <td>@field.ShortName</td>
+                    <td>@field.Prompt</td>
+                    <td>@field.Description</td>
+                    <td>@field.GroupName</td>
+                    <td>@field.Category</td>
+                    <td>@field.Browsable</td>
+                    <td><code>@field.PropertyType</code></td>
+                    <td>@field.DataFormatString</td>
+                    <td>@field.NullDisplayText</td>
+                    <td>@field.SerializationVisibility</td>
+                    <td>@field.Required</td>
+                    <td>@field.ErrorMessage</td>
+                    <td>
+                            <ul class="small">
+                        @{
+                            string[] attributes = (field.Attributes).Split(",");
+                            foreach(string attr in attributes)
+                            {
+                                <li>@attr</li>
+                            }
+                        }
+                            </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    @using System.ComponentModel;
+    //@using System.ComponentModel.DataAnnotations;
+    @using BlazorDataAnnotations.Helpers;
+    @using BlazorDataAnnotations;
+    public List<DataAnnotationsDetails> fieldDetails;
+    protected override void OnInitialized()
+    {
+        HelperFunctions hf = new HelperFunctions();
+        fieldDetails = hf.GetDataAnnotationsDetailsList("DataAnnotationsTestClass");
+    }
+}

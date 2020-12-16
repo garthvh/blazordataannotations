@@ -1,0 +1,42 @@
+[
+
+  {
+    "FirstName": "Qi",
+    "LastName": "Lu",
+    "MoneyField": 5699.95,
+    "ForcastDate": "2006-05-12",
+    "LastUpdated": "2009-06-15T13:45:30", 
+    "TemperatureCelsius": 99,
+    "TemperatureFahrenheit": 15,
+    "Summary": "Qi Lu is a Chinese-American software executive and engineer who is the head of MiraclePlus, a startup incubator in China. Previously, Lu was the head of Y Combinator China until it was shut down.[3] He was formerly chief operating officer of Baidu until he stepped down in May 2018. He has served as executive vice president of Microsoft, leading development of Bing, Skype, and Microsoft Office, and software engineer and manager for Yahoo!'s search technology division."
+  },
+  {
+    
+    "FirstName": "Hubert Blaine",
+    "LastName": "Wolfeschlegelsteinhausenbergerdorff",
+    "MoneyField": 99999.97,
+    "ForcastDate": "2020-12-02",
+    "LastUpdated": "2020-12-12T13:45:30", 
+    "TemperatureCelsius": -0,
+    "TemperatureFahrenheit": 32,
+    "Summary": "The Unexpected tells the story about a boy who is caught in an emotional roller coaster when he loses his parents in a car accident, forcing him to live with his grandmother who he's never met before. Eric will embark in a new life where he will find secrets from his family's past that will change his life forever."
+  },
+  {
+    "FirstName": "Garth",
+    "LastName": "Vander Houwen",
+    "MoneyField": 399.95,
+    "ForcastDate": "2020-12-13",
+    "TemperatureCelsius": -9,
+    "TemperatureFahrenheit": 15,
+    "Summary": "We propose two generic text summarization methods that create text summaries by ranking and extracting sentences from the original documents. The first method uses standard information retrieval methods to rank sentence relevances, while the second method uses the latent semantic analysis technique to identify semantically important sentences, for summary creations."
+  },
+  {
+    "FirstName": "Aongus",
+    "LastName": "O’Callaghan",
+    "MoneyField": 1650.95,
+    "ForcastDate": "2020-12-13",
+    "TemperatureCelsius": -9,
+    "TemperatureFahrenheit": 15,
+    "Summary": "We propose two generic text summarization methods that create text summaries by ranking and extracting sentences from the original documents. The first method uses standard information retrieval methods to rank sentence relevances, while the second method uses the latent semantic analysis technique to identify semantically important sentences, for summary creations."
+  }
+]

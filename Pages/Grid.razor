@@ -1,0 +1,83 @@
+﻿@page "/grid"
+@inject HttpClient Http
+@using System;
+@using System.Linq
+@using System.Reflection
+
+<h1>Dynamic Grid</h1>
+
+<p>This component demonstrates fetching data from the server and formatting the grid and it's cells with the informaton from the associated DataAnnotations.</p>
+
+@if (annotations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div class="row">
+    <div class="col-12-sm">
+        <div class="table-responsive-xl">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        @foreach (var field in fieldDetails)
+                        {
+                            @if(field.Browsable){
+                                if(field.ShortName.Length > 0)
+                                {
+                                    <th>@field.ShortName</th>
+                                }
+                                else
+                                {
+                                    <th>@field.DisplayName</th>
+                                }
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataAnnotationsTestClass annotation in annotations)
+                    {
+                        <tr>
+                        @foreach (var field in fieldDetails)
+                        {
+                            @if(field.Browsable)
+                            {
+                                Type type = typeof(DataAnnotationsTestClass);
+                                // Get the PropertyInfo object by passing the property name.
+                                PropertyInfo propInfo = type.GetProperty(field.Name);
+                                <td>
+                                    @if(!string.IsNullOrWhiteSpace(field.DataFormatString))
+                                    {
+                                        @string.Format(field.DataFormatString, (propInfo.GetValue(annotation) ?? string.Empty))
+                                    }
+                                    else
+                                    {
+                                        @(propInfo.GetValue(annotation) ?? string.Empty)
+                                    }
+                                </td>
+                            }
+                        }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+}   
+
+@code {
+    @using System.ComponentModel.DataAnnotations;
+    @using BlazorDataAnnotations;
+    @using BlazorDataAnnotations.Helpers;
+    private DataAnnotationsTestClass[] annotations;
+    public List<DataAnnotationsDetails> fieldDetails;
+    protected override async Task OnInitializedAsync()
+    {
+        HelperFunctions hf = new HelperFunctions();
+        fieldDetails = hf.GetDataAnnotationsDetailsList("DataAnnotationsTestClass");
+        annotations = await Http.GetFromJsonAsync<DataAnnotationsTestClass[]>("sample-data/annotated-fields.json");
+    }
+
+}
