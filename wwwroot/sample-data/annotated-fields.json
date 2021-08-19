@@ -3,11 +3,16 @@
   {
     "FirstName": "Qi",
     "LastName": "Lu",
+    "Email": "qu.lu@microsoft.com",
+    "Address": "123 East West Street",
+    "Address2": "Unit 7",
     "MoneyField": 5699.95,
     "ForcastDate": "2006-05-12",
     "LastUpdated": "2009-06-15T13:45:30", 
     "TemperatureCelsius": 99,
     "TemperatureFahrenheit": 15,
+    "MovieGenre":"Action",
+    "MovieRating":"NC-17",
     "Summary": "Qi Lu is a Chinese-American software executive and engineer who is the head of MiraclePlus, a startup incubator in China. Previously, Lu was the head of Y Combinator China until it was shut down.[3] He was formerly chief operating officer of Baidu until he stepped down in May 2018. He has served as executive vice president of Microsoft, leading development of Bing, Skype, and Microsoft Office, and software engineer and manager for Yahoo!'s search technology division."
   },
   {

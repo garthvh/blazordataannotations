@@ -1,0 +1,137 @@
+@page "/form"
+@inject ILogger<Form> Logger
+@inject HttpClient Http
+@using System;
+@using BlazorDataAnnotations;
+@using Microsoft.Extensions.Logging
+
+
+<h1>Validated Form</h1>
+
+<div class="col-lg-8">
+
+    <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator  />
+        <ValidationSummary />
+        <div class="row"> 
+            <div class="col-sm-12">
+                <h2>Billing Fields</h2>
+            </div>
+            <div class="col-sm-6">
+                <label for="firstname" class="form-label">First name</label>
+                <InputText id="firstname" class="form-control" @bind-Value="testModel.FirstName" ErrorMessage="{0} is required." />
+                <ValidationMessage For="@(() => testModel.FirstName)" />
+            </div>
+            <div class="col-sm-6">
+                <label for="lastname" class="form-label">Last name</label>
+                <InputText id="lastname" class="form-control" @bind-Value="testModel.LastName" />
+                <ValidationMessage For="@(() => testModel.LastName)" />
+            </div>
+            <div class="col-12">
+                <label for="email" class="form-label">Email</label>
+                <InputText id="Email" class="form-control" @bind-Value="testModel.Email" placeholder="your@examplemail.com" />
+            </div>
+
+            <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <InputText id="Address" class="form-control" @bind-Value="testModel.Address" placeholder="1234 Main St" />
+                <ValidationMessage For="@(() => testModel.Address)" />
+            </div>
+            <div class="col-12">
+                <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+                <InputText id="Address2" class="form-control" @bind-Value="testModel.Address2" placeholder="Apartment or suite"></InputText>
+                <ValidationMessage For="@(() => testModel.Address2)" />
+            </div>
+            <div class="col-md-5">
+                <label for="city" class="form-label">City</label>
+                <InputText id="City" class="form-control" @bind-Value="testModel.City" placeholder="City Name"></InputText>
+            </div>
+            <div class="col-md-3">
+                <label for="state" class="form-label">State</label>
+                <InputSelect id="State" class="form-control" @bind-Value="testModel.State" placeholder="Select a state">
+                <option value="">Select a state</option>
+                @foreach (var state in Enum.GetValues(typeof(States)))
+                {
+                    <option value="@state">@state</option>
+                }
+                </InputSelect>
+            </div>
+            <div class="col-md-4">
+                <label for="zip" class="form-label">Postal Code</label>
+                <InputText id="zip" class="form-control" @bind-Value="testModel.Zip" placeholder="Zip Code"></InputText>
+                <ValidationMessage For="@(() => testModel.Zip)" />
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Movie Fields</h2>
+            </div>
+            <div class="col-12">
+                <label asp-for="ReleaseDate" class="form-label">Release Date</label>
+                <InputDate id="ReleaseDate" class="form-control" @bind-Value="testModel.ReleaseDate" ParsingErrorMessage="The {0} field has an incorrect date value." />
+                <ValidationMessage For="@(() => testModel.ReleaseDate)" />
+            </div>
+            <div class="col-sm-6">
+                <label for="MovieGenre" class="form-label">Movie Genre</label>
+                <InputText id="Movie Genre" class="form-control" @bind-Value="testModel.MovieGenre" ErrorMessage="{0} is required." />
+                <ValidationMessage For="@(() => testModel.MovieGenre)" />
+            </div>
+            <div class="col-sm-6">
+                <label for="MovieRating" class="form-label">Movie Rating</label>
+                <InputText id="MovieRating" class="form-control" @bind-Value="testModel.MovieRating" />
+                <ValidationMessage For="@(() => testModel.MovieRating)" />
+            </div>
+            <h4 class="col-sm-12">Payment Fields</h4>
+            <div class="col-md-4">
+                <label for="routingnumber" class="form-label">Routing Number</label>
+                <InputText id="zip" class="form-control" @bind-Value="testModel.RoutingNumber" placeholder="ACH Routing Number"></InputText>
+                <ValidationMessage For="@(() => testModel.RoutingNumber)" />
+            </div>
+            <h4 class="col-sm-12">Other Fields</h4>
+             <div class="col-md-4">
+                <label for="summary" class="form-label">Summary</label>
+                <InputTextArea id="summary" class="form-control" @bind-Value="testModel.Summary" placeholder="Text Summary"></InputTextArea>
+                <ValidationMessage For="@(() => testModel.Summary)" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </EditForm>
+</div>
+
+
+
+@code {
+    private DataAnnotationsTestClass testModel = new();
+    private EditContext editContext;
+    private ValidationMessageStore messageStore;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        editContext = new(testModel);
+        editContext.OnValidationRequested += HandleValidationRequested;
+        messageStore = new(editContext);
+    }
+    private void HandleValidationRequested(object sender, ValidationRequestedEventArgs args)
+    {
+        messageStore.Clear();
+
+        // Custom validation logic
+        int endOfMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+        Logger.LogInformation("Validate");
+
+    }
+
+     private void HandleValidSubmit()
+    {
+        Logger.LogInformation("HandleValidSubmit called: Processing the form");
+
+        // Process the form
+    }
+
+
+    public void Dispose()
+    {
+        editContext.OnValidationRequested -= HandleValidationRequested;
+    }
+}
